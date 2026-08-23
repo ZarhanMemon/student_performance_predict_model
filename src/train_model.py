@@ -46,8 +46,7 @@ def main():
     
 
     # Step 2: Define features (X) and target (y)
-    # Keep G1 and G2 as features
-    X = data.drop(columns=["G3"])
+    X = data.drop(columns=["G1", "G2", "G3"])
     y = data["G3"]
     
     

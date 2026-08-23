@@ -215,6 +215,27 @@ The required Python packages are listed in `requirementes.txt`.
 | Result Analysis        | Predicted grade and performance category           |
 | Documentation          | README and practical journal report                |
 
+## Result
+
+The Student Performance Prediction system was successfully developed using
+Python and Machine Learning.
+
+The Random Forest Regressor produced the following results on the test dataset:
+
+| Metric | Result |
+|---|---:|
+| Mean Absolute Error (MAE) | 0.94 |
+| Mean Squared Error (MSE) | 2.87 |
+| Root Mean Squared Error (RMSE) | 1.69 |
+| R² Score | 0.81 |
+
+### Model Performance
+-----------------
+MAE:  0.94 |
+MSE:  2.87 |
+RMSE: 1.69 |
+R2:   0.81
+
 ## Limitations
 
 * The model is based on the available student dataset.

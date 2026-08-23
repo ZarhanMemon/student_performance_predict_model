@@ -38,7 +38,7 @@ def main():
     data = pd.concat([data_mat, data_por], ignore_index=True)
     
     # Convert grade columns to integers
-    for col in ["G1", "G2", "G3"]:
+    for col in ["G3"]:
         data[col] = pd.to_numeric(data[col], errors="coerce")
 
     print("Combined dataset shape:", data.shape)
@@ -47,7 +47,7 @@ def main():
 
     # Step 2: Define features (X) and target (y)
     # Keep G1 and G2 as features
-    X = data.drop(columns=["G3"])
+    X = data.drop(columns=["G3","G2","G1"])
     y = data["G3"]
     
     

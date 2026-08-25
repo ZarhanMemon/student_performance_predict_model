@@ -3,139 +3,118 @@ import joblib
 import numpy as np
 import pandas as pd
 
-
-from sklearn.model_selection import train_test_split 
-
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.impute import SimpleImputer
-
 from sklearn.ensemble import RandomForestRegressor
-
-from sklearn.model_selection import cross_val_score
-
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
-
-
-MODEL_PATH = "models/student_performance_model.pkl"     # where tuned model will be saved
+MODEL_PATH = "models/student_performance_model.pkl"
 
 
 def main():
-    
-    # Ensure models directory exists
+
+    # Create models directory
     os.makedirs("models", exist_ok=True)
-    
 
-    # Step 1: Load dataset
-    data_mat = pd.read_csv("data/student-mat.csv", sep=";")
-    data_por = pd.read_csv("data/student-por.csv", sep=";")
+    # Step 1: Load Mathematics dataset
+    data = pd.read_csv("data/student-mat.csv", sep=";")
 
-    # Combine them
-    data = pd.concat([data_mat, data_por], ignore_index=True)
-    
-    # Convert grade columns to integers
-    for col in ["G3"]:
-        data[col] = pd.to_numeric(data[col], errors="coerce")
+    # Convert target to numeric
+    data["G3"] = pd.to_numeric(data["G3"], errors="coerce")
 
-    print("Combined dataset shape:", data.shape)
+    # Remove rows with missing target
+    data = data.dropna(subset=["G3"])
 
-    
+    print("Dataset shape:", data.shape)
 
-    # Step 2: Define features (X) and target (y)
-    # Keep G1 and G2 as features
-    X = data.drop(columns=["G3","G2","G1"])
+    # Step 2: Define features and target
+    # G1 and G2 are intentionally excluded
+    X = data.drop(columns=["G3", "G1", "G2"])
     y = data["G3"]
-    
-    
 
-    # Step 3: Separate numerical and categorical columns
+    # Step 3: Identify numerical and categorical columns
     numerical_columns = X.select_dtypes(
         include=["int64", "float64"]
-        ).columns.tolist()
-    
+    ).columns.tolist()
+
     categorical_columns = X.select_dtypes(
         include=["object"]
-        ).columns.tolist()
+    ).columns.tolist()
 
-
-
-    # Step 4: Build preprocessing pipelines
-    # For numerical features: impute missing values + scale
+    # Step 4: Numerical preprocessing
     numerical_pipeline = Pipeline(
         steps=[
-            ("imputer", SimpleImputer(strategy="median")),
-            ("scaler", StandardScaler())
+            ("imputer", SimpleImputer(strategy="median"))
         ]
     )
-    
 
-    # For categorical features: impute missing values + one-hot encode
+    # Step 5: Categorical preprocessing
     categorical_pipeline = Pipeline(
         steps=[
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            ("encoder", OneHotEncoder(handle_unknown="ignore", sparse_output=False))
+            ("encoder", OneHotEncoder(
+                handle_unknown="ignore",
+                sparse_output=False
+            ))
         ]
     )
-    
-    
 
-    # Step 5: Combine both pipelines into a ColumnTransformer
+    # Step 6: Combine preprocessing
     preprocessor = ColumnTransformer(
         transformers=[
             ("numeric", numerical_pipeline, numerical_columns),
             ("categorical", categorical_pipeline, categorical_columns)
         ]
     )
-    
-    
-    # Step 6: Build full pipeline (preprocessing + model)
+
+    # Step 7: Random Forest model
     model_pipeline = Pipeline(
         steps=[
             ("preprocessor", preprocessor),
             ("model", RandomForestRegressor(
-                n_estimators=800,      # number of trees
-                max_depth=30,          # maximum depth of each tree
-                min_samples_split=5,   # minimum samples to split a node
-                min_samples_leaf=2,    # minimum samples per leaf
+                n_estimators=200,
+                max_depth=15,
+                min_samples_split=5,
+                min_samples_leaf=2,
                 random_state=42
-                )
-            )
+            ))
         ]
     )
-    
-    
-    
-    # Step 7: Train/test split for evaluation
+
+    # Step 8: Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+        X,
+        y,
+        test_size=0.2,
+        random_state=42
     )
-    
-    
-    # Step 8: Cross-validation on full dataset (10-fold)
-    cv_scores = cross_val_score(model_pipeline, X, y, cv=10, scoring="r2")
-    
-    print("Cross-validation R² scores:", cv_scores)
-    print("Mean R²:", cv_scores.mean())
-        
-        
-        
-    # Step 9: Train model on training set
-    print("Training model...")
+
+    # Step 9: 5-fold cross-validation on training data
+    cv_scores = cross_val_score(
+        model_pipeline,
+        X_train,
+        y_train,
+        cv=5,
+        scoring="r2"
+    )
+
+    print("\nCross-validation R² scores:")
+    print(cv_scores)
+
+    print(f"Mean CV R²: {cv_scores.mean():.3f}")
+
+    # Step 10: Train final model
+    print("\nTraining model...")
     model_pipeline.fit(X_train, y_train)
-    
 
-
-    # Step 10: Predict on test set
+    # Step 11: Test predictions
     predictions = model_pipeline.predict(X_test)
-    print(predictions)
-    
-    
-    
-    # Step 11: Evaluate performance
+
+    # Step 12: Evaluation
     mae = mean_absolute_error(y_test, predictions)
     mse = mean_squared_error(y_test, predictions)
     rmse = np.sqrt(mse)
@@ -143,15 +122,14 @@ def main():
 
     print("\nModel Performance")
     print("-----------------")
-    print(f"MAE:  {mae:.2f}")
-    print(f"MSE:  {mse:.2f}")
-    print(f"RMSE: {rmse:.2f}")
-    print(f"R2:   {r2:.2f}")
-    
-    
+    print(f"MAE:  {mae:.3f}")
+    print(f"MSE:  {mse:.3f}")
+    print(f"RMSE: {rmse:.3f}")
+    print(f"R²:   {r2:.3f}")
 
-    # Step 12: Save trained pipeline (preprocessing + model)
+    # Step 13: Save complete pipeline
     joblib.dump(model_pipeline, MODEL_PATH)
+
     print(f"\nModel saved successfully at: {MODEL_PATH}")
 
 

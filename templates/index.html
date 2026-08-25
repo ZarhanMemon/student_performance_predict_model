@@ -1,284 +1,685 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Student Performance Predictor</title>
 
-    <link rel="stylesheet" href="static/style.css" />
-  </head>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 
-  <body>
-    <div class="container">
-      <h1>Student Performance Predictor</h1>
+</head>
 
-      <p>
-        Enter the student's information below to predict their final mathematics
-        grade.
-      </p>
+<body>
 
-      <form method="POST">
-        <!-- ================= STUDENT INFORMATION ================= -->
+<div class="container">
+
+    <h1>Student Performance Predictor</h1>
+
+    <p>
+        Enter student information to predict Mathematics
+        and Portuguese final grades.
+    </p>
+
+
+    <form method="POST">
+
+
+        <!-- BASIC INFORMATION -->
 
         <h2>Student Information</h2>
 
-        <label>School</label>
-        <select name="school">
-          <option value="GP">Gabriel Pereira (GP)</option>
-          <option value="MS">Mousinho da Silveira (MS)</option>
-        </select>
+        <div class="form-grid">
 
-        <label>Gender</label>
-        <select name="sex">
-          <option value="F">Female</option>
-          <option value="M">Male</option>
-        </select>
+            <div>
+                <label>School</label>
 
-        <label>Age</label>
-        <input type="number" name="age" min="15" max="22" value="17" required />
+                <select name="school">
+                    <option value="GP">Gabriel Pereira</option>
+                    <option value="MS">Mousinho da Silveira</option>
+                </select>
+            </div>
 
-        <label>Home Address</label>
-        <select name="address">
-          <option value="U">Urban</option>
-          <option value="R">Rural</option>
-        </select>
 
-        <!-- ================= FAMILY INFORMATION ================= -->
-        <br /><br />
+            <div>
+                <label>Gender</label>
+
+                <select name="sex">
+                    <option value="F">Female</option>
+                    <option value="M">Male</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label>Age</label>
+
+                <input type="number"
+                       name="age"
+                       min="15"
+                       max="22"
+                       value="17"
+                       required>
+            </div>
+
+
+            <div>
+                <label>Address</label>
+
+                <select name="address">
+                    <option value="U">Urban</option>
+                    <option value="R">Rural</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label>Family Size</label>
+
+                <select name="famsize">
+                    <option value="GT3">More than 3</option>
+                    <option value="LE3">3 or fewer</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label>Parents Status</label>
+
+                <select name="Pstatus">
+                    <option value="T">Living Together</option>
+                    <option value="A">Living Apart</option>
+                </select>
+            </div>
+
+        </div>
+
+
+        <!-- FAMILY INFORMATION -->
+
         <h2>Family Information</h2>
 
-        <label>Family Size</label>
-        <select name="famsize">
-          <option value="GT3">More than 3 members</option>
-          <option value="LE3">3 or fewer members</option>
-        </select>
+        <div class="form-grid">
 
-        <label>Parents' Relationship Status</label>
-        <select name="Pstatus">
-          <option value="T">Living together</option>
-          <option value="A">Living apart</option>
-        </select>
+            <div>
+                <label>Mother Education</label>
 
-        <label>Mother's Education</label>
-        <select name="Medu">
-          <option value="0">No formal education</option>
-          <option value="1">Primary education</option>
-          <option value="2">5th–9th grade</option>
-          <option value="3">Secondary education</option>
-          <option value="4">Higher education</option>
-        </select>
+                <select name="Medu">
+                    <option value="0">None</option>
+                    <option value="1">Primary</option>
+                    <option value="2">5th-9th Grade</option>
+                    <option value="3">Secondary</option>
+                    <option value="4">Higher</option>
+                </select>
+            </div>
 
-        <label>Father's Education</label>
-        <select name="Fedu">
-          <option value="0">No formal education</option>
-          <option value="1">Primary education</option>
-          <option value="2">5th–9th grade</option>
-          <option value="3">Secondary education</option>
-          <option value="4">Higher education</option>
-        </select>
 
-        <label>Mother's Job</label>
-        <select name="Mjob">
-          <option value="teacher">Teacher</option>
-          <option value="health">Healthcare</option>
-          <option value="services">Services</option>
-          <option value="at_home">At home</option>
-          <option value="other">Other</option>
-        </select>
+            <div>
+                <label>Father Education</label>
 
-        <label>Father's Job</label>
-        <select name="Fjob">
-          <option value="teacher">Teacher</option>
-          <option value="health">Healthcare</option>
-          <option value="services">Services</option>
-          <option value="at_home">At home</option>
-          <option value="other">Other</option>
-        </select>
+                <select name="Fedu">
+                    <option value="0">None</option>
+                    <option value="1">Primary</option>
+                    <option value="2">5th-9th Grade</option>
+                    <option value="3">Secondary</option>
+                    <option value="4">Higher</option>
+                </select>
+            </div>
 
-        <label>Reason for Choosing This School</label>
-        <select name="reason">
-          <option value="home">Close to home</option>
-          <option value="reputation">School reputation</option>
-          <option value="course">Preferred course</option>
-          <option value="other">Other</option>
-        </select>
 
-        <label>Primary Guardian</label>
-        <select name="guardian">
-          <option value="mother">Mother</option>
-          <option value="father">Father</option>
-          <option value="other">Other</option>
-        </select>
+            <div>
+                <label>Mother Job</label>
 
-        <!-- ================= ACADEMIC INFORMATION ================= -->
-        <br /><br />
+                <select name="Mjob">
+                    <option value="teacher">Teacher</option>
+                    <option value="health">Healthcare</option>
+                    <option value="services">Services</option>
+                    <option value="at_home">At Home</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label>Father Job</label>
+
+                <select name="Fjob">
+                    <option value="teacher">Teacher</option>
+                    <option value="health">Healthcare</option>
+                    <option value="services">Services</option>
+                    <option value="at_home">At Home</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label>School Reason</label>
+
+                <select name="reason">
+                    <option value="home">Close to Home</option>
+                    <option value="reputation">Reputation</option>
+                    <option value="course">Course</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label>Nursery</label>
+
+                <select name="nursery">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label>Internet</label>
+
+                <select name="internet">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+        </div>
+
+
+        <!-- SUBJECT INFORMATION -->
+
         <h2>Academic Information</h2>
 
-        <label>Travel Time to School</label>
-        <select name="traveltime">
-          <option value="1">Less than 15 minutes</option>
-          <option value="2">15–30 minutes</option>
-          <option value="3">30 minutes–1 hour</option>
-          <option value="4">More than 1 hour</option>
-        </select>
+        <table>
 
-        <label>Weekly Study Time</label>
-        <select name="studytime">
-          <option value="1">Less than 2 hours</option>
-          <option value="2">2–5 hours</option>
-          <option value="3">5–10 hours</option>
-          <option value="4">More than 10 hours</option>
-        </select>
-
-        <label>Number of Previous Class Failures</label>
-        <select name="failures">
-          <option value="0">None</option>
-          <option value="1">1 failure</option>
-          <option value="2">2 failures</option>
-          <option value="3">3 or more failures</option>
-        </select>
-
-        <label>Extra Educational Support</label>
-        <select name="schoolsup">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-
-        <label>Family Educational Support</label>
-        <select name="famsup">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-
-        <label>Paid Extra Classes</label>
-        <select name="paid">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-
-        <label>Extracurricular Activities</label>
-        <select name="activities">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-
-        <label>Attended Nursery School</label>
-        <select name="nursery">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-
-        <label>Plans to Pursue Higher Education</label>
-        <select name="higher">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-
-        <!-- ================= LIFESTYLE ================= -->
-        <br /><br />
-        <h2>Technology & Lifestyle</h2>
-
-        <label>Internet Access at Home</label>
-        <select name="internet">
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-
-        <label>Currently in a Romantic Relationship</label>
-        <select name="romantic">
-          <option value="no">No</option>
-          <option value="yes">Yes</option>
-        </select>
-
-        <label>Family Relationship Quality</label>
-        <select name="famrel">
-          <option value="1">Very Bad</option>
-          <option value="2">Bad</option>
-          <option value="3">Average</option>
-          <option value="4" selected>Good</option>
-          <option value="5">Very Good</option>
-        </select>
-
-        <label>Free Time After School</label>
-        <select name="freetime">
-          <option value="1">Very Little</option>
-          <option value="2">Little</option>
-          <option value="3" selected>Average</option>
-          <option value="4">High</option>
-          <option value="5">Very High</option>
-        </select>
-
-        <label>How Often Do You Go Out?</label>
-        <select name="goout">
-          <option value="1">Very Rarely</option>
-          <option value="2">Rarely</option>
-          <option value="3" selected>Sometimes</option>
-          <option value="4">Often</option>
-          <option value="5">Very Often</option>
-        </select>
-
-        <label>Workday Alcohol Consumption</label>
-        <select name="Dalc">
-          <option value="1">Very Low</option>
-          <option value="2">Low</option>
-          <option value="3">Medium</option>
-          <option value="4">High</option>
-          <option value="5">Very High</option>
-        </select>
-
-        <label>Weekend Alcohol Consumption</label>
-        <select name="Walc">
-          <option value="1">Very Low</option>
-          <option value="2">Low</option>
-          <option value="3">Medium</option>
-          <option value="4">High</option>
-          <option value="5">Very High</option>
-        </select>
-
-        <label>Current Health Status</label>
-        <select name="health">
-          <option value="1">Very Poor</option>
-          <option value="2">Poor</option>
-          <option value="3" selected>Average</option>
-          <option value="4">Good</option>
-          <option value="5">Very Good</option>
-        </select>
-
-        <label>Number of School Absences</label>
-        <input type="number" name="absences" min="0" value="4" required />
+            <tr>
+                <th>Feature</th>
+                <th>Mathematics</th>
+                <th>Portuguese</th>
+            </tr>
 
 
-        <!-- ================= SUBMIT ================= -->
-        
-        <br /><br />
-        <button type="submit">Predict Final Grade</button>
-      </form>
+            <tr>
+                <td>Guardian</td>
 
-      <!-- ================= RESULT ================= -->
+                <td>
+                    <select name="guardian_x">
+                        <option value="mother">Mother</option>
+                        <option value="father">Father</option>
+                        <option value="other">Other</option>
+                    </select>
+                </td>
 
-      {% if prediction is not none %}
+                <td>
+                    <select name="guardian_y">
+                        <option value="mother">Mother</option>
+                        <option value="father">Father</option>
+                        <option value="other">Other</option>
+                    </select>
+                </td>
+            </tr>
 
-      <div class="result">
-        <h2>Predicted Grade: {{ prediction }}/20</h2>
 
-        <h3>{{ category }}</h3>
+            <tr>
+                <td>Travel Time</td>
 
-        <p>{{ recommendation }}</p>
-      </div>
+                <td>
+                    <select name="traveltime_x">
+                        <option value="1">&lt;15 min</option>
+                        <option value="2">15-30 min</option>
+                        <option value="3">30-60 min</option>
+                        <option value="4">&gt;1 hour</option>
+                    </select>
+                </td>
 
-      {% endif %}
+                <td>
+                    <select name="traveltime_y">
+                        <option value="1">&lt;15 min</option>
+                        <option value="2">15-30 min</option>
+                        <option value="3">30-60 min</option>
+                        <option value="4">&gt;1 hour</option>
+                    </select>
+                </td>
+            </tr>
 
-      <!-- ================= ERROR ================= -->
 
-      {% if error %}
+            <tr>
+                <td>Study Time</td>
 
-      <div class="error">
+                <td>
+                    <select name="studytime_x">
+                        <option value="1">&lt;2 hours</option>
+                        <option value="2">2-5 hours</option>
+                        <option value="3">5-10 hours</option>
+                        <option value="4">&gt;10 hours</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="studytime_y">
+                        <option value="1">&lt;2 hours</option>
+                        <option value="2">2-5 hours</option>
+                        <option value="3">5-10 hours</option>
+                        <option value="4">&gt;10 hours</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Failures</td>
+
+                <td>
+                    <select name="failures_x">
+                        <option value="0">None</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3+</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="failures_y">
+                        <option value="0">None</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3+</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Extra Educational Support</td>
+
+                <td>
+                    <select name="schoolsup_x">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="schoolsup_y">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Family Support</td>
+
+                <td>
+                    <select name="famsup_x">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="famsup_y">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Paid Classes</td>
+
+                <td>
+                    <select name="paid_x">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="paid_y">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Activities</td>
+
+                <td>
+                    <select name="activities_x">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="activities_y">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Higher Education</td>
+
+                <td>
+                    <select name="higher_x">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="higher_y">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Romantic Relationship</td>
+
+                <td>
+                    <select name="romantic_x">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="romantic_y">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Family Relationship</td>
+
+                <td>
+                    <select name="famrel_x">
+                        <option value="1">Very Bad</option>
+                        <option value="2">Bad</option>
+                        <option value="3">Average</option>
+                        <option value="4" selected>Good</option>
+                        <option value="5">Very Good</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="famrel_y">
+                        <option value="1">Very Bad</option>
+                        <option value="2">Bad</option>
+                        <option value="3">Average</option>
+                        <option value="4" selected>Good</option>
+                        <option value="5">Very Good</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Free Time</td>
+
+                <td>
+                    <select name="freetime_x">
+                        <option value="1">Very Little</option>
+                        <option value="2">Little</option>
+                        <option value="3" selected>Average</option>
+                        <option value="4">High</option>
+                        <option value="5">Very High</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="freetime_y">
+                        <option value="1">Very Little</option>
+                        <option value="2">Little</option>
+                        <option value="3" selected>Average</option>
+                        <option value="4">High</option>
+                        <option value="5">Very High</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Going Out</td>
+
+                <td>
+                    <select name="goout_x">
+                        <option value="1">Very Rarely</option>
+                        <option value="2">Rarely</option>
+                        <option value="3" selected>Sometimes</option>
+                        <option value="4">Often</option>
+                        <option value="5">Very Often</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="goout_y">
+                        <option value="1">Very Rarely</option>
+                        <option value="2">Rarely</option>
+                        <option value="3" selected>Sometimes</option>
+                        <option value="4">Often</option>
+                        <option value="5">Very Often</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Workday Alcohol</td>
+
+                <td>
+                    <select name="Dalc_x">
+                        <option value="1">Very Low</option>
+                        <option value="2">Low</option>
+                        <option value="3">Medium</option>
+                        <option value="4">High</option>
+                        <option value="5">Very High</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="Dalc_y">
+                        <option value="1">Very Low</option>
+                        <option value="2">Low</option>
+                        <option value="3">Medium</option>
+                        <option value="4">High</option>
+                        <option value="5">Very High</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Weekend Alcohol</td>
+
+                <td>
+                    <select name="Walc_x">
+                        <option value="1">Very Low</option>
+                        <option value="2">Low</option>
+                        <option value="3">Medium</option>
+                        <option value="4">High</option>
+                        <option value="5">Very High</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="Walc_y">
+                        <option value="1">Very Low</option>
+                        <option value="2">Low</option>
+                        <option value="3">Medium</option>
+                        <option value="4">High</option>
+                        <option value="5">Very High</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Health</td>
+
+                <td>
+                    <select name="health_x">
+                        <option value="1">Very Poor</option>
+                        <option value="2">Poor</option>
+                        <option value="3" selected>Average</option>
+                        <option value="4">Good</option>
+                        <option value="5">Very Good</option>
+                    </select>
+                </td>
+
+                <td>
+                    <select name="health_y">
+                        <option value="1">Very Poor</option>
+                        <option value="2">Poor</option>
+                        <option value="3" selected>Average</option>
+                        <option value="4">Good</option>
+                        <option value="5">Very Good</option>
+                    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Absences</td>
+
+                <td>
+                    <input type="number"
+                           name="absences_x"
+                           min="0"
+                           value="4"
+                           required>
+                </td>
+
+                <td>
+                    <input type="number"
+                           name="absences_y"
+                           min="0"
+                           value="4"
+                           required>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Grade 1</td>
+
+                <td>
+                    <input type="number"
+                           name="G1_x"
+                           min="0"
+                           max="20"
+                           value="10"
+                           required>
+                </td>
+
+                <td>
+                    <input type="number"
+                           name="G1_y"
+                           min="0"
+                           max="20"
+                           value="10"
+                           required>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Grade 2</td>
+
+                <td>
+                    <input type="number"
+                           name="G2_x"
+                           min="0"
+                           max="20"
+                           value="10"
+                           required>
+                </td>
+
+                <td>
+                    <input type="number"
+                           name="G2_y"
+                           min="0"
+                           max="20"
+                           value="10"
+                           required>
+                </td>
+            </tr>
+
+        </table>
+
+
+        <br>
+
+        <button type="submit">
+            Predict Final Grades
+        </button>
+
+    </form>
+
+
+    <!-- RESULTS -->
+
+    {% if math_prediction is not none %}
+
+    <div class="result">
+
+        <h2>Prediction Results</h2>
+
+        <p>
+            <strong>Mathematics:</strong>
+            {{ math_prediction }}/20
+            — {{ math_category }}
+        </p>
+
+        <p>
+            <strong>Portuguese:</strong>
+            {{ portuguese_prediction }}/20
+            — {{ portuguese_category }}
+        </p>
+
+        <p>
+            {{ recommendation }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ERROR -->
+
+    {% if error %}
+
+    <div class="error">
+
         <strong>Error:</strong>
         {{ error }}
-      </div>
 
-      {% endif %}
     </div>
-  </body>
+
+    {% endif %}
+
+</div>
+
+</body>
 </html>

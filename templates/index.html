@@ -2,17 +2,13 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Student Performance Predictor</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 
 <body>
@@ -22,15 +18,14 @@
     <h1>Student Performance Predictor</h1>
 
     <p>
-        Enter student information to predict Mathematics
-        and Portuguese final grades.
+        Enter student details to predict Mathematics and Portuguese
+        final grades.
     </p>
 
 
     <form method="POST">
 
-
-        <!-- BASIC INFORMATION -->
+        <!-- STUDENT INFORMATION -->
 
         <h2>Student Information</h2>
 
@@ -38,27 +33,22 @@
 
             <div>
                 <label>School</label>
-
                 <select name="school">
                     <option value="GP">Gabriel Pereira</option>
                     <option value="MS">Mousinho da Silveira</option>
                 </select>
             </div>
 
-
             <div>
                 <label>Gender</label>
-
                 <select name="sex">
                     <option value="F">Female</option>
                     <option value="M">Male</option>
                 </select>
             </div>
 
-
             <div>
                 <label>Age</label>
-
                 <input type="number"
                        name="age"
                        min="15"
@@ -67,30 +57,24 @@
                        required>
             </div>
 
-
             <div>
                 <label>Address</label>
-
                 <select name="address">
                     <option value="U">Urban</option>
                     <option value="R">Rural</option>
                 </select>
             </div>
 
-
             <div>
                 <label>Family Size</label>
-
                 <select name="famsize">
                     <option value="GT3">More than 3</option>
                     <option value="LE3">3 or fewer</option>
                 </select>
             </div>
 
-
             <div>
                 <label>Parents Status</label>
-
                 <select name="Pstatus">
                     <option value="T">Living Together</option>
                     <option value="A">Living Apart</option>
@@ -108,7 +92,6 @@
 
             <div>
                 <label>Mother Education</label>
-
                 <select name="Medu">
                     <option value="0">None</option>
                     <option value="1">Primary</option>
@@ -118,10 +101,8 @@
                 </select>
             </div>
 
-
             <div>
                 <label>Father Education</label>
-
                 <select name="Fedu">
                     <option value="0">None</option>
                     <option value="1">Primary</option>
@@ -131,10 +112,8 @@
                 </select>
             </div>
 
-
             <div>
                 <label>Mother Job</label>
-
                 <select name="Mjob">
                     <option value="teacher">Teacher</option>
                     <option value="health">Healthcare</option>
@@ -144,10 +123,8 @@
                 </select>
             </div>
 
-
             <div>
                 <label>Father Job</label>
-
                 <select name="Fjob">
                     <option value="teacher">Teacher</option>
                     <option value="health">Healthcare</option>
@@ -157,10 +134,8 @@
                 </select>
             </div>
 
-
             <div>
                 <label>School Reason</label>
-
                 <select name="reason">
                     <option value="home">Close to Home</option>
                     <option value="reputation">Reputation</option>
@@ -169,24 +144,168 @@
                 </select>
             </div>
 
-
             <div>
                 <label>Nursery</label>
-
                 <select name="nursery">
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                 </select>
             </div>
 
-
             <div>
                 <label>Internet</label>
-
                 <select name="internet">
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                 </select>
+            </div>
+
+        </div>
+
+
+        <!-- COMMON STUDENT HABITS -->
+
+        <h2>Student Habits</h2>
+
+        <p>
+            These details are common for both subjects.
+        </p>
+
+        <div class="form-grid">
+
+            <div>
+                <label>Guardian</label>
+                <select name="guardian_x"
+                        onchange="copyValue('guardian_x','guardian_y')">
+                    <option value="mother">Mother</option>
+                    <option value="father">Father</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <input type="hidden"
+                       name="guardian_y"
+                       id="guardian_y"
+                       value="mother">
+            </div>
+
+
+            <div>
+                <label>Family Relationship</label>
+                <select name="famrel_x"
+                        onchange="copyValue('famrel_x','famrel_y')">
+
+                    <option value="1">Very Bad</option>
+                    <option value="2">Bad</option>
+                    <option value="3">Average</option>
+                    <option value="4" selected>Good</option>
+                    <option value="5">Very Good</option>
+
+                </select>
+
+                <input type="hidden"
+                       name="famrel_y"
+                       id="famrel_y"
+                       value="4">
+            </div>
+
+
+            <div>
+                <label>Free Time</label>
+                <select name="freetime_x"
+                        onchange="copyValue('freetime_x','freetime_y')">
+
+                    <option value="1">Very Little</option>
+                    <option value="2">Little</option>
+                    <option value="3" selected>Average</option>
+                    <option value="4">High</option>
+                    <option value="5">Very High</option>
+
+                </select>
+
+                <input type="hidden"
+                       name="freetime_y"
+                       id="freetime_y"
+                       value="3">
+            </div>
+
+
+            <div>
+                <label>Going Out</label>
+                <select name="goout_x"
+                        onchange="copyValue('goout_x','goout_y')">
+
+                    <option value="1">Very Rarely</option>
+                    <option value="2">Rarely</option>
+                    <option value="3" selected>Sometimes</option>
+                    <option value="4">Often</option>
+                    <option value="5">Very Often</option>
+
+                </select>
+
+                <input type="hidden"
+                       name="goout_y"
+                       id="goout_y"
+                       value="3">
+            </div>
+
+
+            <div>
+                <label>Health</label>
+                <select name="health_x"
+                        onchange="copyValue('health_x','health_y')">
+
+                    <option value="1">Very Poor</option>
+                    <option value="2">Poor</option>
+                    <option value="3" selected>Average</option>
+                    <option value="4">Good</option>
+                    <option value="5">Very Good</option>
+
+                </select>
+
+                <input type="hidden"
+                       name="health_y"
+                       id="health_y"
+                       value="3">
+            </div>
+
+
+            <div>
+                <label>Workday Alcohol</label>
+                <select name="Dalc_x"
+                        onchange="copyValue('Dalc_x','Dalc_y')">
+
+                    <option value="1">Very Low</option>
+                    <option value="2">Low</option>
+                    <option value="3">Medium</option>
+                    <option value="4">High</option>
+                    <option value="5">Very High</option>
+
+                </select>
+
+                <input type="hidden"
+                       name="Dalc_y"
+                       id="Dalc_y"
+                       value="1">
+            </div>
+
+
+            <div>
+                <label>Weekend Alcohol</label>
+                <select name="Walc_x"
+                        onchange="copyValue('Walc_x','Walc_y')">
+
+                    <option value="1">Very Low</option>
+                    <option value="2">Low</option>
+                    <option value="3">Medium</option>
+                    <option value="4">High</option>
+                    <option value="5">Very High</option>
+
+                </select>
+
+                <input type="hidden"
+                       name="Walc_y"
+                       id="Walc_y"
+                       value="1">
             </div>
 
         </div>
@@ -205,26 +324,7 @@
             </tr>
 
 
-            <tr>
-                <td>Guardian</td>
-
-                <td>
-                    <select name="guardian_x">
-                        <option value="mother">Mother</option>
-                        <option value="father">Father</option>
-                        <option value="other">Other</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="guardian_y">
-                        <option value="mother">Mother</option>
-                        <option value="father">Father</option>
-                        <option value="other">Other</option>
-                    </select>
-                </td>
-            </tr>
-
+            <!-- TRAVEL TIME -->
 
             <tr>
                 <td>Travel Time</td>
@@ -249,6 +349,8 @@
             </tr>
 
 
+            <!-- STUDY TIME -->
+
             <tr>
                 <td>Study Time</td>
 
@@ -272,8 +374,10 @@
             </tr>
 
 
+            <!-- FAILURES -->
+
             <tr>
-                <td>Failures</td>
+                <td>Previous Failures</td>
 
                 <td>
                     <select name="failures_x">
@@ -295,6 +399,8 @@
             </tr>
 
 
+            <!-- SCHOOL SUPPORT -->
+
             <tr>
                 <td>Extra Educational Support</td>
 
@@ -313,6 +419,8 @@
                 </td>
             </tr>
 
+
+            <!-- FAMILY SUPPORT -->
 
             <tr>
                 <td>Family Support</td>
@@ -333,6 +441,8 @@
             </tr>
 
 
+            <!-- PAID CLASSES -->
+
             <tr>
                 <td>Paid Classes</td>
 
@@ -351,6 +461,8 @@
                 </td>
             </tr>
 
+
+            <!-- ACTIVITIES -->
 
             <tr>
                 <td>Activities</td>
@@ -371,6 +483,8 @@
             </tr>
 
 
+            <!-- HIGHER EDUCATION -->
+
             <tr>
                 <td>Higher Education</td>
 
@@ -389,6 +503,8 @@
                 </td>
             </tr>
 
+
+            <!-- ROMANTIC -->
 
             <tr>
                 <td>Romantic Relationship</td>
@@ -409,155 +525,7 @@
             </tr>
 
 
-            <tr>
-                <td>Family Relationship</td>
-
-                <td>
-                    <select name="famrel_x">
-                        <option value="1">Very Bad</option>
-                        <option value="2">Bad</option>
-                        <option value="3">Average</option>
-                        <option value="4" selected>Good</option>
-                        <option value="5">Very Good</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="famrel_y">
-                        <option value="1">Very Bad</option>
-                        <option value="2">Bad</option>
-                        <option value="3">Average</option>
-                        <option value="4" selected>Good</option>
-                        <option value="5">Very Good</option>
-                    </select>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td>Free Time</td>
-
-                <td>
-                    <select name="freetime_x">
-                        <option value="1">Very Little</option>
-                        <option value="2">Little</option>
-                        <option value="3" selected>Average</option>
-                        <option value="4">High</option>
-                        <option value="5">Very High</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="freetime_y">
-                        <option value="1">Very Little</option>
-                        <option value="2">Little</option>
-                        <option value="3" selected>Average</option>
-                        <option value="4">High</option>
-                        <option value="5">Very High</option>
-                    </select>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td>Going Out</td>
-
-                <td>
-                    <select name="goout_x">
-                        <option value="1">Very Rarely</option>
-                        <option value="2">Rarely</option>
-                        <option value="3" selected>Sometimes</option>
-                        <option value="4">Often</option>
-                        <option value="5">Very Often</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="goout_y">
-                        <option value="1">Very Rarely</option>
-                        <option value="2">Rarely</option>
-                        <option value="3" selected>Sometimes</option>
-                        <option value="4">Often</option>
-                        <option value="5">Very Often</option>
-                    </select>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td>Workday Alcohol</td>
-
-                <td>
-                    <select name="Dalc_x">
-                        <option value="1">Very Low</option>
-                        <option value="2">Low</option>
-                        <option value="3">Medium</option>
-                        <option value="4">High</option>
-                        <option value="5">Very High</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="Dalc_y">
-                        <option value="1">Very Low</option>
-                        <option value="2">Low</option>
-                        <option value="3">Medium</option>
-                        <option value="4">High</option>
-                        <option value="5">Very High</option>
-                    </select>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td>Weekend Alcohol</td>
-
-                <td>
-                    <select name="Walc_x">
-                        <option value="1">Very Low</option>
-                        <option value="2">Low</option>
-                        <option value="3">Medium</option>
-                        <option value="4">High</option>
-                        <option value="5">Very High</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="Walc_y">
-                        <option value="1">Very Low</option>
-                        <option value="2">Low</option>
-                        <option value="3">Medium</option>
-                        <option value="4">High</option>
-                        <option value="5">Very High</option>
-                    </select>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td>Health</td>
-
-                <td>
-                    <select name="health_x">
-                        <option value="1">Very Poor</option>
-                        <option value="2">Poor</option>
-                        <option value="3" selected>Average</option>
-                        <option value="4">Good</option>
-                        <option value="5">Very Good</option>
-                    </select>
-                </td>
-
-                <td>
-                    <select name="health_y">
-                        <option value="1">Very Poor</option>
-                        <option value="2">Poor</option>
-                        <option value="3" selected>Average</option>
-                        <option value="4">Good</option>
-                        <option value="5">Very Good</option>
-                    </select>
-                </td>
-            </tr>
-
+            <!-- ABSENCES -->
 
             <tr>
                 <td>Absences</td>
@@ -579,6 +547,8 @@
                 </td>
             </tr>
 
+
+            <!-- G1 -->
 
             <tr>
                 <td>Grade 1</td>
@@ -602,6 +572,8 @@
                 </td>
             </tr>
 
+
+            <!-- G2 -->
 
             <tr>
                 <td>Grade 2</td>
@@ -680,6 +652,19 @@
     {% endif %}
 
 </div>
+
+
+<!-- COPY COMMON VALUES -->
+
+<script>
+
+function copyValue(source, target) {
+    document.getElementById(target).value =
+        document.querySelector('[name="' + source + '"]').value;
+}
+
+</script>
+
 
 </body>
 </html>

@@ -652,3 +652,11 @@ GitHub:
 This project is developed for academic practical work under:
 
 
+<img width="715" height="727" alt="Screenshot 2026-08-25 192042" src="https://github.com/user-attachments/assets/e30ac728-f63a-45e5-87ff-953f7efba6b2" />
+
+<img width="391" height="803" alt="Screenshot 2026-08-25 190029" src="https://github.com/user-attachments/assets/3912cbc2-ea6b-439d-8fbc-684684387d6e" />
+
+
+<img width="397" height="789" alt="Screenshot 2026-08-25 190047" src="https://github.com/user-attachments/assets/fffad637-5837-4b0a-9f15-08d46bc4bc38" />
+
+
